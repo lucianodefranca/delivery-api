@@ -34,4 +34,16 @@ public class ClienteController {
     public Cliente adicionar(@RequestBody Cliente cliente) {
         return clienteRepository.save(cliente);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Cliente> atualizar(@PathVariable Long id, @RequestBody Cliente cliente) {
+        if (!clienteRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        cliente.setId(id);
+        cliente = clienteRepository.save(cliente);
+
+        return ResponseEntity.ok(cliente);
+    }
 }
