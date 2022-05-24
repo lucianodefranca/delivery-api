@@ -3,10 +3,9 @@ package com.luciano.deliveryapi.controller;
 import com.luciano.deliveryapi.domain.model.Cliente;
 import com.luciano.deliveryapi.domain.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,5 +27,11 @@ public class ClienteController {
         return clienteRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Cliente adicionar(@RequestBody Cliente cliente) {
+        return clienteRepository.save(cliente);
     }
 }
